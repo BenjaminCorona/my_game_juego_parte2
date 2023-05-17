@@ -11,22 +11,19 @@ import 'package:flutter/services.dart';
 import 'package:juego_2/tap_button.dart';
 import 'my_game.dart';
 
-
 import 'drag_component.dart';
 import 'flower_player.dart';
 
 class MyGame extends FlameGame with KeyboardEvents {
   final sizeOfPlayer = Vector2(80, 180);
-  int puntaje=0;
-  int score=0;
-  double vel=.5;
-  double GenerarFigura=3;
-  double TiempoGenerarFigura=0;
-  int vidas=3;
+  int puntaje = 0;
+  int score = 0;
+  double vel = .5;
+  double GenerarFigura = 3;
+  double TiempoGenerarFigura = 0;
+  int ping = 0;
   late final FlowerPlayer player;
   late final JoystickComponent joystick;
-
-  
 
   // PARA ACTIVAR EL DEBUG
   @override
@@ -45,7 +42,6 @@ class MyGame extends FlameGame with KeyboardEvents {
   @override
   Future<void> onLoad() async {
     children.register<Flower>();
-
 
     final image = await images.load('joystick.png');
     final sheet = SpriteSheet.fromColumnsAndRows(
@@ -96,38 +92,114 @@ class MyGame extends FlameGame with KeyboardEvents {
       final Flower flower = children.query<Flower>().first;
       flower.position = Vector2(flower.position.x, size.y - sizeOfPlayer.y);
     }
-    
-    if(vidas>0){
 
-    TiempoGenerarFigura+=dt;
-    if(TiempoGenerarFigura>GenerarFigura){
-      var RanPos=Random();
-      var RanFig=Random();
+    TiempoGenerarFigura += dt;
+    if (TiempoGenerarFigura > GenerarFigura) {
+      var RanPos = Random();
+      var RanFig = Random();
+      var RanW = Random();
+      var RanH = Random();
 
-      switch(RanFig.nextInt(5)){
+      switch (RanFig.nextInt(5)) {
         case 0:
-          add(Mexico(position: Vector2(RanPos.nextDouble()*(size.x-140),-80), size: Vector2(140,80), paint: Paint()..color = Colors.green) );
+          double minWidth = 80; // Anchura mínima del rectángulo
+          double maxWidth = 140; // Anchura máxima del rectángulo
+          double fixedHeight = 80; // Altura fija del rectángulo
+
+          // Generar un factor de escala aleatorio entre 0.5 y 2.0
+          double scale = 0.5 + RanW.nextDouble() * 1.5;
+
+          // Calcular la anchura escalada
+          double scaledWidth = minWidth + (maxWidth - minWidth) * scale;
+
+          add(Mexico(
+            position: Vector2(
+                RanPos.nextDouble() * (size.x - scaledWidth), -fixedHeight),
+            size: Vector2(scaledWidth, fixedHeight),
+            paint: Paint()..color = Colors.green,
+          ));
           break;
         case 1:
-          add(Pinguino(position: Vector2(RanPos.nextDouble()*(size.x-40),-80), size: Vector2(40,80), paint: Paint()..color = Colors.grey) );
+          double minWidth = 40; // Anchura mínima del rectángulo
+          double maxWidth = 40; // Anchura máxima del rectángulo
+          double fixedHeight = 80; // Altura fija del rectángulo
+
+          // Generar un factor de escala aleatorio entre 0.5 y 2.0
+          double scale = 0.5 + RanW.nextDouble() * 1.5;
+
+          // Calcular la anchura escalada
+          double scaledWidth = minWidth + (maxWidth - minWidth) * scale;
+
+          add(Pinguino(
+            position: Vector2(
+                RanPos.nextDouble() * (size.x - scaledWidth), -fixedHeight),
+            size: Vector2(scaledWidth, fixedHeight),
+            paint: Paint()..color = Colors.grey,
+          ));
           break;
         case 2:
-          add(Caballito(position: Vector2(RanPos.nextDouble()*(size.x-40),-80), size: Vector2(40,80), paint: Paint()..color = Colors.brown) );
+          double minWidth = 40; // Anchura mínima del rectángulo
+          double maxWidth = 40; // Anchura máxima del rectángulo
+          double fixedHeight = 80; // Altura fija del rectángulo
+
+          // Generar un factor de escala aleatorio entre 0.5 y 2.0
+          double scale = 0.5 + RanW.nextDouble() * 1.5;
+
+          // Calcular la anchura escalada
+          double scaledWidth = minWidth + (maxWidth - minWidth) * scale;
+
+          add(Caballito(
+            position: Vector2(
+                RanPos.nextDouble() * (size.x - scaledWidth), -fixedHeight),
+            size: Vector2(scaledWidth, fixedHeight),
+            paint: Paint()..color = Colors.brown,
+          ));
           break;
         case 3:
-          add(Libreta(position: Vector2(RanPos.nextDouble()*(size.x-40),-80), size: Vector2(40,80), paint: Paint()..color = Colors.pink) );
+          double minWidth = 40; // Anchura mínima del rectángulo
+          double maxWidth = 40; // Anchura máxima del rectángulo
+          double fixedHeight = 80; // Altura fija del rectángulo
+
+          // Generar un factor de escala aleatorio entre 0.5 y 2.0
+          double scale = 0.5 + RanW.nextDouble() * 1.5;
+
+          // Calcular la anchura escalada
+          double scaledWidth = minWidth + (maxWidth - minWidth) * scale;
+
+          add(Libreta(
+            position: Vector2(
+                RanPos.nextDouble() * (size.x - scaledWidth), -fixedHeight),
+            size: Vector2(scaledWidth, fixedHeight),
+            paint: Paint()..color = Colors.pink,
+          ));
           break;
         case 4:
-          add(Elefante(position: Vector2(RanPos.nextDouble()*(size.x-120),-80), size: Vector2(120,80), paint: Paint()..color = Colors.blue) );
+          double minWidth = 80; // Anchura mínima del rectángulo
+          double maxWidth = 120; // Anchura máxima del rectángulo
+          double fixedHeight = 80; // Altura fija del rectángulo
+
+          // Generar un factor de escala aleatorio entre 0.5 y 2.0
+          double scale = 0.5 + RanW.nextDouble() * 1.5;
+
+          // Calcular la anchura escalada
+          double scaledWidth = minWidth + (maxWidth - minWidth) * scale;
+
+          add(Elefante(
+            position: Vector2(
+                RanPos.nextDouble() * (size.x - scaledWidth), -fixedHeight),
+            size: Vector2(scaledWidth, fixedHeight),
+            paint: Paint()..color = Colors.blue,
+          ));
           break;
       }
-      if(score%5==0){
-      vel+=.2;
-      GenerarFigura*=.9;
+
+      if (score % 5 == 0) {
+        vel += .2;
+        //GenerarFigura *= .9;
       }
 
       //add(Pinguino(position: Vector2(RanPos.nextDouble()*(size.x-40),-80), size: Vector2(40,80), paint: Paint()..color = Colors.pink) );
-      TiempoGenerarFigura=0;
+      TiempoGenerarFigura = 0;
     }
 
     bool colMexico(FlowerPlayer player, Mexico figura) {
@@ -190,33 +262,35 @@ class MyGame extends FlameGame with KeyboardEvents {
       return rectPlayer.overlaps(rectFigura);
     }
 
-    for(var text in children.query<TextComponent>()){
+    for (var text in children.query<TextComponent>()) {
       children.remove(text);
     }
-    add(TextComponent(
-         priority: 100,
-         text: score.toString(),
-         position: Vector2(30, 30),
-         size: Vector2(100, 50),
-       ),);
-    
-    add(TextComponent(
-         priority: 100,
-         text: "Vidas:"+vidas.toString(),
-         position: Vector2(30, 160),
-         size: Vector2(100, 50),
-       ));
+    add(
+      TextComponent(
+        priority: 100,
+        text: "Score: " + score.toString(),
+        position: Vector2(30, 30),
+        size: Vector2(100, 50),
+      ),
+    );
+
+    add(
+      TextComponent(
+        priority: 100,
+        text: "Pingüinos: " + ping.toString(),
+        position: Vector2(30, 160),
+        size: Vector2(100, 50),
+      ),
+    );
 
     for (var figura in children.query<Mexico>()) {
       if (colMexico(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
@@ -225,12 +299,11 @@ class MyGame extends FlameGame with KeyboardEvents {
       if (colPinguino(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
+        ping++;
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
@@ -239,12 +312,10 @@ class MyGame extends FlameGame with KeyboardEvents {
       if (colCaballito(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
@@ -253,12 +324,10 @@ class MyGame extends FlameGame with KeyboardEvents {
       if (colElefante(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
@@ -267,12 +336,10 @@ class MyGame extends FlameGame with KeyboardEvents {
       if (colLibreta(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
@@ -281,17 +348,14 @@ class MyGame extends FlameGame with KeyboardEvents {
       if (colStickman(player, figura)) {
         children.remove(figura);
         score += 1;
-        print(score);
       } else {
         figura.y += vel;
         if (figura.y > size.y) {
           children.remove(figura);
-          vidas--;
         }
       }
     }
 
-    }
     super.update(dt);
   }
 
@@ -328,5 +392,4 @@ class MyGame extends FlameGame with KeyboardEvents {
       flower.position.x = -flower.size.x;
     }
   }
-  
 }
